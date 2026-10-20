@@ -1,5 +1,6 @@
 from django.db import models
 from applications.users.models import User
+from .managers import CategoryManager
 
 # Create your models here.
 class Category(models.Model):
@@ -7,6 +8,8 @@ class Category(models.Model):
     description = models.TextField(blank=True, null=True, max_length=255)
     parent_category = models.ForeignKey("self", on_delete=models.CASCADE, verbose_name="parent category", null=True, blank=True)
     position = models.PositiveBigIntegerField()
+
+    objects = CategoryManager()
 
     class Meta:
         verbose_name = "category"

@@ -1,0 +1,10 @@
+@for (category of categoryResource.value(); track $index) {
+  <a href="#">
+    <div class="bg-base-300 w-full h-50 mt-20 pt-4 pl-4">
+      <h2 class="text-4xl">{{category.title}}</h2>
+      <p class="pt-5">{{category.description}}</p>
+    </div>
+  </a>
+}@empty {
+  <div class="bg-base-300 w-full h-50 mt-20 text-3xl text-red-500">Non hai categorías.</div>
+}

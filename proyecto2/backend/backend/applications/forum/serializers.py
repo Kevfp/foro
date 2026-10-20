@@ -28,7 +28,7 @@ class TopicSerializer(ModelSerializer):
 class ReadOnlyPostSerializer(ModelSerializer):
     topic = ReadOnlyTopicSerializer()
     user = PublicUserSerializer()
-    parent_post = SerializerMethodField()
+    """ parent_post = SerializerMethodField() """
     class Meta:
         model = Post
         fields = [
@@ -40,12 +40,12 @@ class ReadOnlyPostSerializer(ModelSerializer):
             "updated_at",
         ]
 
-    def get_parent_post(self, obj):
+"""     def get_parent_post(self, obj):
         if obj.parent_post:
             parent_post = Post.objects.get(id=obj.parent_post.id)
             return parent_post.id
         else:
-            return None
+            return None """
 
 class PostSerializer(ModelSerializer):
     class Meta:

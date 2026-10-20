@@ -21,7 +21,7 @@ def _choose_serializer(obj, read_only, writable_serializer, *args, **kwargs):
     return serializer_class(*args, **kwargs)
 
 class CategoryViewset(ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.filter_parent_categories()
     serializer_class = CategorySerializer
 
 class PostViewset(ModelViewSet):
