@@ -24,6 +24,14 @@ class CategoryViewset(ModelViewSet):
     queryset = Category.objects.filter_parent_categories()
     serializer_class = CategorySerializer
 
+class EntretementoViewset(ModelViewSet):
+    queryset = Category.objects.filter_entretemento()
+    serializer_class = CategorySerializer
+
+class ArteViewset(ModelViewSet):
+    queryset = Category.objects.filter_arte()
+    serializer_class = CategorySerializer
+
 class PostViewset(ModelViewSet):
     queryset = Post.objects.all()
 

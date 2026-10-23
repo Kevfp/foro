@@ -1,5 +1,5 @@
 @for (category of categoryResource.value(); track $index) {
-  <a href="#">
+  <a [routerLink]="linkMap.get(category.title)" routerLinkActive="router-link-active" >
     <div class="bg-base-300 w-full h-50 mt-20 pt-4 pl-4">
       <h2 class="text-4xl">{{category.title}}</h2>
       <p class="pt-5">{{category.description}}</p>

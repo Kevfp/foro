@@ -8,10 +8,42 @@ from .models import (
 
 from applications.users.serializers import PublicUserSerializer
 
-class CategorySerializer(ModelSerializer):
+class SubcategorySerializer(ModelSerializer):
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = [
+            "id",
+            "title",
+            "description",
+            "position",
+            "parent_category",
+        ]
+
+class CategorySerializer(ModelSerializer):
+    subcategories = SerializerMethodField()
+
+    class Meta:
+        model = Category
+        fields = [
+            "id",
+            "title",
+            "description",
+            "subcategories",
+            "position",
+            "parent_category",
+            ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        view = self.context.get("view")
+
+        if view and view.action != "retrieve":
+            self.fields.pop("subcategories", None)
+
+    def get_subcategories(self, obj):
+        subcategories = Category.objects.filter(parent_category= obj.id)
+        return SubcategorySerializer(subcategories, many=True, context=self.context).data
 
 class ReadOnlyTopicSerializer(ModelSerializer):
     category = CategorySerializer()

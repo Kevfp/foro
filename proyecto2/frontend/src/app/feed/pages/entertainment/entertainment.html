@@ -1,0 +1,12 @@
+@for (subcategory of subcategoryResource.value(); track $index) {
+<a href="">
+  <div class="min-w-64 min-h-32 mt-5 bg-base-300 pt-4 pl-4">
+    <h2 class="text-2xl">
+      {{ subcategory.title }}
+    </h2>
+    <p class="text-xl">
+      {{ subcategory.description }}
+    </p>
+  </div>
+</a>
+}

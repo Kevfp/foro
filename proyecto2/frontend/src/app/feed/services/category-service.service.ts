@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { environmentDev } from '@environment/environment.development';
-import { Category } from '@interfaces/forum.interfaces';
-import { catchError, of, tap } from 'rxjs';
+import { Category, Subcategory } from '@interfaces/forum.interfaces';
+import { catchError, map, of, tap } from 'rxjs';
 
 @Service()
 export class CategoryService {
@@ -12,15 +12,37 @@ export class CategoryService {
   http = inject(HttpClient);
 
   getCategories(){
-    console.log(`${this.url}/forum/category/`);
     return this.http.get<Category[]>(`${this.url}/forum/category/`).
     pipe(
-      tap((results) => console.log(results)),
       catchError((error) =>{
         console.log(error);
         return of([]);
       }
     )
     );
+  }
+
+  getCategory(id: number){
+    return this.http.get<Category>(`${this.url}/forum/category/${id}/`).
+    pipe(
+      // catchError((error)=>{
+      //   console.log(error);
+      //   return of([]);
+      // })
+    )
+  }
+
+  getSubcategories(id:number){
+    const subcategories: Subcategory[] = [];
+    return this.getCategory(id).pipe(
+      map((response) => {
+        response.subcategories?.forEach((subcategory) => subcategories.push(subcategory))
+        return subcategories;
+      },
+    catchError((error) => {
+      console.log(error);
+      return of([])
+    }))
+    )
   }
 }
